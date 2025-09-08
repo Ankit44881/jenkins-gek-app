@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: us-central1-docker.pkg.dev/summer-nexus-468907-t1/jenkins-gke-repo/hello-world:latest
+        image: us-central1-docker.pkg.dev/summer-nexus-468907-t1/jenkins-gke-repo/myapp:latest
         ports:
         - containerPort: 8080
