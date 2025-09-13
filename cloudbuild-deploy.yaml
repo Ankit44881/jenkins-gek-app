@@ -1,0 +1,30 @@
+steps:
+  # Step 1: Authenticate to GKE
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud container clusters get-credentials autopilot-cluster-1 \
+          --region us-central1 \
+          --project summer-nexus-468907-t1
+
+  # Step 2: Deploy the Kubernetes manifests
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      [
+        'apply',
+        '-f',
+        'k8s-deployment.yaml'
+      ]
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      [
+        'apply',
+        '-f',
+        'k8s-service.yaml'
+      ]
+
+options:
+  logging: CLOUD_LOGGING_ONLY
