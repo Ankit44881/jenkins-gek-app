@@ -7,18 +7,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$COMMIT_SHA']
 
-# Step 3: Update image in Kubernetes deployment
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-    - set
-    - image
-    - deployment/myapp-deployment
-    - myapp=us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$COMMIT_SHA
-  env:
-    - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
-
-# Step 4: Apply manifests
+# Step 3: Apply manifests (deployment + service)
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'deployment.yaml']
   env:
@@ -27,6 +16,17 @@ steps:
 
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'service.yaml']
+  env:
+    - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
+
+# Step 4: Update image in Kubernetes deployment (forces rollout)
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - set
+    - image
+    - deployment/myapp-deployment
+    - myapp=us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$COMMIT_SHA
   env:
     - 'CLOUDSDK_COMPUTE_REGION=us-central1'
     - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
