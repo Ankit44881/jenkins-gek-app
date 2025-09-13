@@ -9,8 +9,11 @@ steps:
           --region us-central1 \
           --project summer-nexus-468907-t1
 
-  # Step 2: Deploy the Kubernetes manifests
+  # Step 2: Deploy Deployment
   - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
     args:
       [
         'apply',
@@ -18,7 +21,11 @@ steps:
         'k8s-deployment.yaml'
       ]
 
+  # Step 3: Deploy Service
   - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
     args:
       [
         'apply',
@@ -28,3 +35,4 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
