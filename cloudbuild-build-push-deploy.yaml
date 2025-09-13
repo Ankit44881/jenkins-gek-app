@@ -1,0 +1,46 @@
+steps:
+  # Step 1: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$SHORT_SHA', '.']
+
+  # Step 2: Push Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$SHORT_SHA']
+
+  # Step 3: Authenticate with GKE
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'container'
+      - 'clusters'
+      - 'get-credentials'
+      - 'my-gke-cluster'
+      - '--region'
+      - 'us-central1'
+      - '--project'
+      - 'summer-nexus-468907-t1'
+
+  # Step 4: Apply Kubernetes manifests
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'deployment.yaml'
+      - '-f'
+      - 'service.yaml'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster'
+
+  # Step 5: Update deployment image to new version
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'set'
+      - 'image'
+      - 'deployment/myapp-deployment'
+      - 'myapp-container=us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$SHORT_SHA'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster'
+
+images:
+  - 'us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$SHORT_SHA'
