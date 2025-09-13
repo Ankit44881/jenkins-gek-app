@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "Hello from Ankit's app deployed via Jenkins on GKE!"
+    return "Hello from Ankit's build-push-deploy !"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
