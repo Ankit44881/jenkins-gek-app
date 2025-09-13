@@ -16,20 +16,20 @@ steps:
     - myapp=us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$COMMIT_SHA
   env:
     - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=gk3-autopilot-cluster-1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
 
 # Step 4: Apply manifests
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'deployment.yaml']
   env:
     - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=gk3-autopilot-cluster-1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
 
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'service.yaml']
   env:
     - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=gk3-autopilot-cluster-1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
 
 # Images section
 images:
