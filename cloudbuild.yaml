@@ -5,7 +5,7 @@ steps:
       [
         'build',
         '-t',
-        'us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repocluster/jenkins-app:$SHORT_SHA',
+        'us-central1-docker.pkg.dev/summer-nexus-468907-t1/my-jenkins-repo/jenkins-app:$SHORT_SHA',
         '.'
       ]
 
