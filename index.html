@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chai Politics</title>
     <style>
-        body { background-color: #f4e1d2; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        h1 { color: #5d4037; }
+        body {
+            background-color: #fdf5e6; /* Creamy Chai color */
+            color: #4b2c20;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            border: 4px double #8b4513;
+            padding: 30px;
+            display: inline-block;
+            background: white;
+            box-shadow: 10px 10px 0px #8b4513;
+        }
+        h1 { font-size: 3.5rem; margin-bottom: 0; }
+        .tagline { 
+            font-style: italic; 
+            font-size: 1.4rem; 
+            color: #d2691e;
+            margin-top: 10px;
+        }
+        .menu-item { font-weight: bold; color: #a52a2a; }
+        .footer { margin-top: 40px; font-size: 0.8rem; opacity: 0.6; }
     </style>
 </head>
 <body>
-    <h1>Welcome to Chai Politics!</h1>
-    <p>Brewing the latest updates for Patna.</p>
+    <div class="container">
+        <h1>Chai Politics! ☕</h1>
+        <p class="tagline">"Where every sip sparks a debate!"</p>
+        <hr>
+        <p>Brewing the latest updates for <strong>Patna</strong>.</p>
+        <p>Current Vibe: <span class="menu-item">Muffler Momo & 2-Minute Ghosna Maggie</span></p>
+    </div>
+    <div class="footer">
+        Deploy ID: ${env.BUILD_ID} | Proudly hosted on AWS EKS via Jenkins
+    </div>
 </body>
 </html>
